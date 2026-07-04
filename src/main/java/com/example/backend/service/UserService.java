@@ -17,6 +17,18 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * 現在の Firebase UID に対応する User を取得する。存在しない場合は新規作成する。
+     * Rails の ApplicationController#authenticate_user! (User.find_or_create_by) に相当。
+     */
+    @Transactional
+    public User getCurrentUser() {
+        String firebaseUid = SecurityUtil.getFirebaseUid();
+
+        return userRepository.findByFirebaseUid(firebaseUid)
+                .orElseGet(() -> userRepository.save(new User(firebaseUid)));
+    }
+
     @Transactional
     public void deleteMe() {
 
