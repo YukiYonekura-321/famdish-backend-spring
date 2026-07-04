@@ -1,6 +1,4 @@
 package com.example.backend.entity;
-
-import java.awt.Menu;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,4 +55,3 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Menu> menus = new ArrayList<>();
 }
-
