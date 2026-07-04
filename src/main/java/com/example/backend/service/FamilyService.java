@@ -1,7 +1,5 @@
 package com.example.backend.service;
 
-import org.apache.coyote.BadRequestException;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +8,8 @@ import com.example.backend.dto.FamilyResponse;
 import com.example.backend.entity.Family;
 import com.example.backend.entity.Member;
 import com.example.backend.entity.User;
+import com.example.backend.exception.NotFoundException;
+import com.example.backend.exception.BadRequestException;
 import com.example.backend.repository.FamilyRepository;
 import com.example.backend.repository.MemberRepository;
 
