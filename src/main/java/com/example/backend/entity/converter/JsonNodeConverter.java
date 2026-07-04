@@ -1,11 +1,14 @@
 package com.example.backend.entity.converter;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.NullNode;
+
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-
-import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.ObjectMapper;
-import tools.jackson.databind.node.NullNode;
 
 /**
  * Postgres の json カラム (Rails の t.json) と Java の {@link JsonNode} を相互変換する。
@@ -20,7 +23,11 @@ public class JsonNodeConverter implements AttributeConverter<JsonNode, String> {
         if (attribute == null || attribute.isNull()) {
             return null;
         }
-        return OBJECT_MAPPER.writeValueAsString(attribute);
+        try {
+            return OBJECT_MAPPER.writeValueAsString(attribute);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 
     @Override
@@ -28,6 +35,10 @@ public class JsonNodeConverter implements AttributeConverter<JsonNode, String> {
         if (dbData == null || dbData.isBlank()) {
             return NullNode.getInstance();
         }
-        return OBJECT_MAPPER.readTree(dbData);
+        try {
+            return OBJECT_MAPPER.readTree(dbData);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 }

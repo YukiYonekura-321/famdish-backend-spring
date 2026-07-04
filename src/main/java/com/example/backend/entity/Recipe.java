@@ -16,7 +16,7 @@ import com.example.backend.entity.converter.JsonNodeConverter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tools.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.JsonNode;
 
 @Entity
 @Table(name = "recipes")
